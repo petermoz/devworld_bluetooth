@@ -13,6 +13,7 @@
 		D07A4DD7160EE090004A99C6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D07A4DD5160EE090004A99C6 /* Credits.rtf */; };
 		D07A4DDA160EE090004A99C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D07A4DD9160EE090004A99C6 /* AppDelegate.m */; };
 		D07A4DDD160EE090004A99C6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07A4DDB160EE090004A99C6 /* MainMenu.xib */; };
+		D07A4DE4160EE344004A99C6 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D07A4DE3160EE344004A99C6 /* IOBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		D07A4DD8160EE090004A99C6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D07A4DD9160EE090004A99C6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D07A4DDC160EE090004A99C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D07A4DE3160EE344004A99C6 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D07A4DE4160EE344004A99C6 /* IOBluetooth.framework in Frameworks */,
 				D07A4DC7160EE090004A99C6 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +66,7 @@
 		D07A4DC5160EE090004A99C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D07A4DE3160EE344004A99C6 /* IOBluetooth.framework */,
 				D07A4DC6160EE090004A99C6 /* Cocoa.framework */,
 				D07A4DC8160EE090004A99C6 /* Other Frameworks */,
 			);
