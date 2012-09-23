@@ -12,5 +12,6 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSTextField *message;
+@property (weak) IBOutlet NSTextField *value;
 
 @end

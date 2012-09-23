@@ -77,6 +77,7 @@
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
     self.message.stringValue = @"Scanning for devices";
+    self.value.stringValue = @"####";
     [self.manager scanForPeripheralsWithServices:nil options:nil];
 
 }
