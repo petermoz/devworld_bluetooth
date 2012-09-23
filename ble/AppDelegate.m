@@ -9,9 +9,11 @@
 #import "AppDelegate.h"
 #import <IOBluetooth/IOBluetooth.h>
 
-@interface AppDelegate () <CBCentralManagerDelegate>
+@interface AppDelegate () <CBCentralManagerDelegate, CBPeripheralDelegate>
 
 @property (nonatomic, retain) CBCentralManager *manager;
+@property (nonatomic, retain) CBPeripheral *peripheral;
+
 @property (nonatomic, retain) NSDictionary *known_uuids;
 
 @end
@@ -55,10 +57,42 @@
     CBUUID *uuid = [CBUUID UUIDWithCFUUID:peripheral.UUID];
     NSString *name = self.known_uuids[uuid];
     if(name) {
-        self.message.stringValue = [NSString stringWithFormat:@"Welcome, %@", name];
+        self.message.stringValue = [NSString stringWithFormat:@"Detected %@", name];
+        [self.manager stopScan];
+        self.peripheral = peripheral;
+        self.peripheral.delegate = self;
+        [self.manager connectPeripheral:peripheral options:@{CBConnectPeripheralOptionNotifyOnDisconnectionKey: @YES}];
     }
     else {
         self.message.stringValue = @"Unknown device discovered";
+    }
+}
+
+
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
+{
+    [peripheral readRSSI];
+}
+
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+{
+    self.message.stringValue = @"Scanning for devices";
+    [self.manager scanForPeripheralsWithServices:nil options:nil];
+
+}
+
+# pragma mark - Peripheral delegate
+
+- (void)peripheralDidUpdateRSSI:(CBPeripheral *)peripheral error:(NSError *)error
+{
+    if(peripheral.RSSI.intValue == 127 || peripheral.RSSI.intValue < -40)
+    {
+        // Wait for proximity
+        [peripheral readRSSI];
+    }
+    else {
+        CBUUID *uuid = [CBUUID UUIDWithCFUUID:peripheral.UUID];
+        self.message.stringValue = [NSString stringWithFormat:@"Welcome, %@", self.known_uuids[uuid]];
     }
 }
 
