@@ -38,7 +38,8 @@
             break;
             
         case CBCentralManagerStatePoweredOn:
-            self.message.stringValue = @"Bluetooth is powered on";
+            self.message.stringValue = @"Scanning for devices";
+            [self.manager scanForPeripheralsWithServices:nil options:nil];
             break;
             
         case CBCentralManagerStateUnsupported:
@@ -49,6 +50,10 @@
     
 }
 
+- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
+{
+    NSLog(@"Discovered: %@", peripheral.UUID);
+}
 
 
 @end
