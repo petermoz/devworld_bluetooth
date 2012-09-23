@@ -94,8 +94,36 @@
     else {
         CBUUID *uuid = [CBUUID UUIDWithCFUUID:peripheral.UUID];
         self.message.stringValue = [NSString stringWithFormat:@"Welcome, %@", self.known_uuids[uuid]];
+        
+        // Discover specific battery service
+        [peripheral discoverServices:@[[CBUUID UUIDWithString:@"e001"]]];
     }
 }
+
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error
+{
+    for (CBService* service in peripheral.services) {
+        // Discover battery characteristic
+        [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:@"e101"]] forService:service];
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error
+{   
+    for (CBCharacteristic *characteristic in service.characteristics) {
+        // Read immediately
+        [peripheral readValueForCharacteristic:characteristic];
+        // Notify on change
+        [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
+{
+    self.value.stringValue = [characteristic.value description];
+}
+
+
 
 
 @end
