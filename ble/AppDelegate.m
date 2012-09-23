@@ -52,7 +52,14 @@
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
-    NSLog(@"Discovered: %@", peripheral.UUID);
+    CBUUID *uuid = [CBUUID UUIDWithCFUUID:peripheral.UUID];
+    NSString *name = self.known_uuids[uuid];
+    if(name) {
+        self.message.stringValue = [NSString stringWithFormat:@"Welcome, %@", name];
+    }
+    else {
+        self.message.stringValue = @"Unknown device discovered";
+    }
 }
 
 
